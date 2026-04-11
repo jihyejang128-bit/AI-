@@ -1,0 +1,61 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", serif;
+  
+  --color-brand-indigo: #4F46E5;
+  --color-brand-cyan: #06B6D4;
+  --color-dark-bg: #0F172A;
+  --color-dark-card: #1E293B;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4 {
+    @apply font-serif;
+  }
+}
+
+.hero-gradient {
+  background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.15), transparent),
+              linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+}
+
+.highlight {
+  background: linear-gradient(90deg, #4F46E5, #06B6D4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4F46E5, #06B6D4);
+  @apply text-white font-bold transition-all duration-300;
+  box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.39);
+}
+
+.btn-primary:hover {
+  @apply -translate-y-1;
+  box-shadow: 0 10px 30px rgba(79, 70, 229, 0.5);
+}
+
+.card-modern {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  @apply rounded-[24px];
+}
+
+.glass-nav {
+  @apply bg-slate-950/80 backdrop-blur-xl border-b border-white/5;
+}
+
+.arch-shape {
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+}

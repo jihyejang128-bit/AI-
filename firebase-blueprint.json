@@ -1,0 +1,25 @@
+{
+  "entities": {
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "A contact or education inquiry from a user",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["education", "product", "business", "other"] },
+        "name": { "type": "string", "description": "Name or institution" },
+        "email": { "type": "string", "format": "email" },
+        "message": { "type": "string" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type", "name", "email", "message", "userId", "userEmail", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/inquiries/{inquiryId}": {
+      "schema": "Inquiry",
+      "description": "Collection of user inquiries"
+    }
+  }
+}

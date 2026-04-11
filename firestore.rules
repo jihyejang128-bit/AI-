@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: inquiries
+    // Document ID: auto-generated
+    // Fields:
+    //   - type: string (required) - 'education', 'product', 'business', 'other'
+    //   - name: string (required) - Name or institution name
+    //   - email: string (required) - Contact email
+    //   - message: string (required) - Inquiry content
+    //   - userId: string (required) - UID of the user who submitted
+    //   - userEmail: string (required) - Email of the user who submitted
+    //   - createdAt: timestamp (required) - Server timestamp
+    //
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidInquiry(data) {
+      return data.type in ['education', 'product', 'business', 'other'] &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             data.email is string && data.email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$") &&
+             data.message is string && data.message.size() > 0 && data.message.size() < 5000 &&
+             data.userId == request.auth.uid &&
+             data.userEmail == request.auth.token.email;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+             (request.auth.token.email == "mychang1089@gmail.com" && request.auth.token.email_verified == true);
+    }
+
+    match /inquiries/{inquiryId} {
+      // Users can create inquiries if they are logged in and data is valid
+      allow create: if isAuthenticated() && isValidInquiry(request.resource.data);
+      
+      // Users can read their own inquiries, admins can read all
+      allow read: if isAuthenticated() && (isOwner(resource.data.userId) || isAdmin());
+      
+      // Only admins can update or delete inquiries
+      allow update, delete: if isAdmin();
+    }
+
+    match /users/{userId} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+  }
+}
