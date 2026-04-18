@@ -382,7 +382,10 @@ const Profile = () => (
         </div>
         
         <div className="lg:w-2/3">
-          <h2 className="text-4xl font-serif mb-2 text-white">대표자 프로필</h2>
+          <div className="flex items-baseline gap-4 mb-2">
+            <h2 className="text-4xl font-serif text-white">대표자 프로필</h2>
+            <p className="text-xl font-medium text-slate-400">장지혜 대표</p>
+          </div>
           <p className="highlight font-bold mb-8 italic">"AI는 도구일 뿐, 핵심은 교육적 가치의 융합입니다."</p>
           
           <div className="grid md:grid-cols-2 gap-8">
@@ -619,7 +622,11 @@ const Footer = () => (
       </div>
       
       <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-slate-500">
-        <p>© 2026 한국AI융합교육연구소. All rights reserved.</p>
+        <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
+          <p>© 2026 한국AI융합교육연구소. All rights reserved.</p>
+          <span className="hidden md:inline text-white/10">|</span>
+          <p>대표 장지혜</p>
+        </div>
         <div className="flex gap-8">
           <a href="#" className="hover:text-white transition-colors">이용약관</a>
           <a href="#" className="hover:text-white font-bold transition-colors">개인정보처리방침</a>
